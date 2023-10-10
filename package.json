@@ -1,6 +1,6 @@
 {
   "name": "forge-music",
-  "version": "0.0.1-fix#klZClzibqwixa",
+  "version": "0.0.1-fixklZClzibqwixa",
   "description": "A standard music extension library for forgescript",
   "main": "lib/index.js",
   "scripts": {
