@@ -4,13 +4,13 @@ import { ArgType, NativeFunction, Return, ReturnType } from "forgescript";
 
 export default new NativeFunction({
     name: "$voiceJoin",
-    description: "Request the client to connect to a voice channel.",
+    description: "Request the client to connect to a voice channel from guild.",
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "channelId",
-            description: "A voice channel to connect",
+            description: "The voice channel for the client to create a connection.",
             rest: false,
             required: true,
             type: ArgType.Channel,

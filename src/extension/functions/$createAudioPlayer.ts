@@ -3,13 +3,13 @@ import AudioNode = require("../../structures/AudioNode");
 
 export default new NativeFunction({
     name: "$createAudioPlayer",
-    description: "Creates an Audio player.",
+    description: "Creates a new Audio player with id if one doesn't exists.",
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "id",
-            description: "Assigned id for created Audio player",
+            description: "The id that will be assigned to the Audio player",
             rest: false,
             required: true,
             type: ArgType.String
