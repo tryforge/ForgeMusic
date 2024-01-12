@@ -22,9 +22,16 @@ declare interface AudioNode {
 }
 
 class AudioNode extends EventEmitter {
+    static readonly Instances = new Map<string, AudioNode>();
+    public readonly id: string;
     readonly #AudioPlayer = new AudioPlayer();
     #playingSound?: AudioTrack;
     #audioResource?: AudioResource<internal.PassThrough>;
+
+    public constructor(id: string) {
+        super();
+        this.id = id;
+    }
 
     public get volume(): VolumeTransformer | undefined {
         return this.#audioResource?.volume;

@@ -1,5 +1,4 @@
-import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
-import { BaseChannel, VoiceChannel } from "discord.js";
+import { getVoiceConnection } from "@discordjs/voice";
 import { ArgType, NativeFunction, Return, ReturnType } from "forgescript";
 
 export default new NativeFunction({
