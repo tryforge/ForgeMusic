@@ -2,7 +2,6 @@ import path = require("node:path");
 import AudioNode = require("./structures/AudioNode");
 
 // Sources
-import Soundcloud = require("./sources/soundcloud/Soundcloud");
 
 declare global {
     namespace NodeJS {
@@ -25,7 +24,4 @@ process.env.sound_cache_dir = path.join(process.cwd(), '.cache');
 
 export {
     AudioNode,
-
-    // Sources
-    Soundcloud
 }

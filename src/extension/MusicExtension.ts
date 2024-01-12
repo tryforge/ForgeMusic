@@ -16,7 +16,10 @@ class MusicExtension extends ForgeExtension {
     public version = version;
 
     public readonly nodes = new Map<string, AudioNode>();
+    public readonly config = new Map<string, string | number | boolean>();
     public init(client: ForgeClient) {
         client.music = this;
     }
 }
+
+export = MusicExtension;

@@ -5,9 +5,9 @@ import { getVoiceConnection } from "@discordjs/voice";
 import { AudioPlayer } from "@discordjs/voice";
 import EventEmitter = require("node:events");
 import constants = require("../utils/constants");
-import AudioSound = require("./AudioSound");
 import internal = require("node:stream");
 import { VolumeTransformer } from "prism-media";
+import { AudioTrack } from "../utils";
 
 interface AudioNodeEvents {
     "connectionAdded": [connection: VoiceConnection, node: AudioNode];
@@ -23,23 +23,23 @@ declare interface AudioNode {
 
 class AudioNode extends EventEmitter {
     readonly #AudioPlayer = new AudioPlayer();
-    #playingSound?: AudioSound;
+    #playingSound?: AudioTrack;
     #audioResource?: AudioResource<internal.PassThrough>;
 
     public get volume(): VolumeTransformer | undefined {
         return this.#audioResource?.volume;
     }
 
-    public async playAudio(sound: AudioSound) {
+    public async playAudio(sound: AudioTrack) {
         if (this.#playingSound && this.#audioResource) {
-            this.#playingSound.unpipe(this.#audioResource.metadata);
+            // this.#playingSound.unpipe(this.#audioResource.metadata);
         }
 
         if (! sound) return;
         this.#playingSound = sound;
         this.#audioResource = this.#createAudioResource();
 
-        this.#playingSound.pipe(this.#audioResource.metadata);
+        // this.#playingSound.pipe(this.#audioResource.metadata);
         this.#AudioPlayer.play(this.#audioResource);
     }
 
