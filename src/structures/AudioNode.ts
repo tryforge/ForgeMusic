@@ -6,11 +6,16 @@ import { AudioPlayer } from "@discordjs/voice";
 import EventEmitter = require("node:events");
 import constants = require("../utils/constants");
 import internal = require("node:stream");
-import { VolumeTransformer } from "prism-media";
+import { VolumeTransformer, opus } from "prism-media";
 import { AudioTrack } from "../utils";
 
 interface AudioNodeEvents {
     "connectionAdded": [connection: VoiceConnection, node: AudioNode];
+    "trackStarting": [track: AudioTrack];
+    "trackStopped": [track: AudioTrack];
+
+    // For misc stuffs
+    "trackAudioStream": [track: AudioTrack, stream: internal.PassThrough | opus.Decoder];
 }
 
 declare interface AudioNode {
