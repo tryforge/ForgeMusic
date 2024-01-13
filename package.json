@@ -1,6 +1,6 @@
 {
   "name": "forge-music",
-  "version": "0.0.3-dev",
+  "version": "0.0.4-dev",
   "description": "",
   "main": "index.js",
   "scripts": {

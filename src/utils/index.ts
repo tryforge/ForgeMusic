@@ -2,13 +2,16 @@ enum AudioNodeEvents {
     ConnectionAdded = "connectionAdded"
 }
 
-interface AudioTrack {
+interface AudioTrack<Metadata = unknown> {
     title: string;
     identifier: string;
     sourceName: string;
     author: string;
+    authorId: string;
     artworkId: string;
     isStream: boolean;
+    duration: number;
+    [x: string]: string | number | boolean | Metadata;
 }
 
 interface LoadTracksResult {
