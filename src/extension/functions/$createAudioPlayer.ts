@@ -1,5 +1,5 @@
 import { ArgType, NativeFunction, Return, ReturnType } from "forgescript";
-import AudioNode = require("../../structures/AudioNode");
+import AudioPlayerNode = require("../../structures/AudioPlayerNode");
 
 export default new NativeFunction({
     name: "$createAudioPlayer",
@@ -16,8 +16,8 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [id]) {
-        if (! AudioNode.Instances.has(id)) {
-            AudioNode.Instances.set(id, new AudioNode(id));
+        if (! AudioPlayerNode.Instances.has(id)) {
+            AudioPlayerNode.Instances.set(id, new AudioPlayerNode(id));
         }
 
         return new Return(ReturnType.Success, "");

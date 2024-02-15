@@ -1,16 +1,16 @@
 import path = require("node:path");
 import fs = require("node:fs");
 import prism = require("prism-media");
-import MusicExtension = require("../../extension/MusicExtension");
-import AudioSource = require("../../structures/AudioSource");
-import { AudioTrack, LoadTracksResult } from "../../utils";
-import { FFMPEG_ARGUMENTS, decode, encode } from "../../utils/constants";
+import MusicExtension = require("../extension/MusicExtension");
+import SourceExtension = require("../structures/SourceExtension");
+import { SearchResult, SoundMetadata, SoundTrack } from "../utils";
+import { FFMPEG_ARGUMENTS, decode, encode } from "../utils/constants";
 import { Readable } from "stream";
 
 /**
  * A source for creating an audio cache and retreiving it
  */
-class TemporaryAudio extends AudioSource {
+class TemporaryAudio extends SourceExtension {
     public readonly sourceName = "temp";
     #tempFileExtension = ".eepy";
     #tempFolder = path.join(process.cwd(), ".musictemp");
@@ -37,31 +37,21 @@ class TemporaryAudio extends AudioSource {
      * @param limit 
      * @param offset 
      */
-    public async loadTracks(query: string, limit?: number | undefined, offset?: number | undefined): Promise<LoadTracksResult | null> {
+    public async search(query: string, limit?: number | undefined, offset?: number | undefined): Promise<SearchResult | null> {
         const tracks = query.split(",").slice(limit, offset)
         .filter(encoded => fs.existsSync(path.join(this.#tempFolder, encoded + this.#tempFileExtension)))
         .map( encoded => decode(encoded) )
 
-        return {
-            collection: tracks.map(info => {
-                return {
-                    ...info,
-                    sourceName: this.sourceName,
-                    previousSource: info.sourceName
-                }
-            }),
-            limit: limit || -1,
-            offset: offset || 0,
-            type: "search",
-            
-            title: "",
-            description: "",
-            author: "",
-            countResults: tracks.length
-        }
+        return tracks.map(info => {
+            return {
+                ...info,
+                sourceName: this.sourceName,
+                previousSource: info.sourceName
+            }
+        })
     }
 
-    public async createAudioStream(track: AudioTrack<unknown>): Promise<{ demuxer?: prism.opus.OggDemuxer | prism.opus.WebmDemuxer | undefined; decoder: prism.opus.Decoder | prism.FFmpeg; stream: Readable; } | null> {
+    public async createAudioMetadata(track: SoundTrack): Promise<SoundMetadata | null> {
         return {
             demuxer: undefined,
             decoder: new prism.FFmpeg({ args: FFMPEG_ARGUMENTS }),

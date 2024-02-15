@@ -1,45 +1,42 @@
-enum AudioNodeEvents {
+import internal = require("node:stream");
+import { FFmpeg, opus } from "prism-media";
+
+enum AudioPlayerNodeEvents {
     ConnectionAdded = "connectionAdded"
 }
 
-interface AudioTrack<Metadata = unknown> {
+interface SoundTrack {
     title: string;
     identifier: string;
     sourceName: string;
-    author: string;
-    authorId: string;
+    author: { name: string, url: string };
     artworkId: string;
-    isStream: boolean;
+    isLiveStream: boolean;
     duration: number;
-    [x: string]: string | number | boolean | Metadata;
+    [x: string]: any;
 }
 
-interface LoadTracksResult {
-    /** The results of load tracks from search */
-    collection: AudioTrack[];
-    /** The passed limit from params, if the value is not provided by default sets to (-1) */
-    limit: number;
-    /** The passed offset from params, if the value is not provided by default sets to (0) */
-    offset: number;
-
-    /**
-     * - Type of "playlist" is for results that is using a playlist url.
-     * - Type of "search" is for default searching.
-     * - Type of "track" is for query's that reference a track.
-     */
-    type: "playlist" | "track" | "search"
-    /** The playlist name, if type is not playlist by defautlt sets to ("") */
-    title: string;
-    /** The playlist description, if type is not playlist by defautlt sets to ("") */
-    description: string;
-    /** The playlist author urn, if type is not playlist by defautlt sets to ("") */
-    author: string;
-    /** The amount of tracks is collected from search results */
-    countResults: number;
+interface PlaylistInfo {
+    name: string;
+    author: { name: string, url: string };
+    url: string;
+    sourceName: string;
+    size: number;
+    tracks: SoundTrack[];
 }
+
+interface SoundMetadata {
+    stream: internal.Readable;
+    decoder: FFmpeg | opus.Decoder;
+    demuxer?: opus.WebmDemuxer | opus.OggDemuxer;
+}
+
+type SearchResult = (SoundTrack | PlaylistInfo)[];
 
 export {
-    AudioNodeEvents,
-    AudioTrack,
-    LoadTracksResult
+    AudioPlayerNodeEvents,
+    SoundTrack,
+    PlaylistInfo,
+    SoundMetadata,
+    SearchResult
 }

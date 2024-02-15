@@ -1,4 +1,4 @@
-import { AudioTrack } from ".";
+import { SoundTrack } from ".";
 
 export const FFMPEG_ARGUMENTS = [
     '-analyzeduration', 
@@ -46,12 +46,12 @@ export const regex = {
     encodedTrackString: /([^:]+):([^_]+)_([^=]+)=(\d+)=([^=]+)=([^\?]+)\?(Y|N){1}_/
 }
 
-export const encode = (track: AudioTrack) => {
+export const encode = (track: SoundTrack) => {
     // Regex /([^:]+):([^_]+)_([^=]+)=(\d+)=([^\?]+)\?(Y|N){1}_/
-    return Buffer.from(`${track.sourceName}:${track.identifier}_${track.artworkId}=${track.duration}=${track.author}=${track.authorId}?${ track.isStream ? "Y" : "N" }_${track.title}`);
+    return Buffer.from(`${track.sourceName}:${track.identifier}_${track.artworkId}=${track.duration}=${track.author.name}_${track.author.url}=${track.authorId}?${ track.isLiveStream ? "Y" : "N" }_${track.title}`);
 }
 
-export const decode = (encoded: string): AudioTrack => {
+export const decode = (encoded: string): SoundTrack => {
     const text = Buffer.from(encoded, "base64url").toString("utf-8");
     const [
         _,
@@ -64,6 +64,8 @@ export const decode = (encoded: string): AudioTrack => {
         isStream,
         title
     ] = text.split(regex.encodedTrackString);
+
+    const [authorName, authorURL] = author.split("_");
     
-    return { sourceName: source, identifier, artworkId, author, authorId, duration: Number(duration), isStream: isStream === "Y", title };
+    return { sourceName: source, identifier, artworkId, author: { name: authorName, url: authorURL }, authorId, duration: Number(duration), isLiveStream: isStream === "Y", title };
 }

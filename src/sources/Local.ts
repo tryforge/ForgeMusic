@@ -1,15 +1,15 @@
-import MusicExtension = require("../../extension/MusicExtension");
-import AudioSource = require("../../structures/AudioSource");
+import MusicExtension = require("../extension/MusicExtension");
+import SourceExtension = require("../structures/SourceExtension");
 import fs = require("node:fs");
-import { AudioTrack, LoadTracksResult } from "../../utils";
+import { PlaylistInfo, SearchResult, SoundMetadata, SoundTrack } from "../utils";
 import path = require("node:path");
 import { opus, FFmpeg } from "prism-media";
 import { Readable } from "stream";
 import { StreamType, demuxProbe } from "@discordjs/voice";
 import prism = require('prism-media');
-import { BYTES_PER_SECOND, FFMPEG_ARGUMENTS } from "../../utils/constants";
+import { BYTES_PER_SECOND, FFMPEG_ARGUMENTS } from "../utils/constants";
 
-class Local extends AudioSource {
+class Local extends SourceExtension {
     public readonly sourceName = "local";
     #soundsFolder = path.join(process.cwd(), "sounds")
 
@@ -19,32 +19,23 @@ class Local extends AudioSource {
         this.#soundsFolder = p;
     }
 
-    public async loadTracks(query: string, limit = -1, offset = 0): Promise<LoadTracksResult | null> {
+    public async search(query: string, limit = -1, offset = 0): Promise<SearchResult | null> {
         const p = path.join(this.#soundsFolder, query);
         if (! fs.existsSync(p)) return null;
 
         const stat = await fs.promises.stat(p);
         if (stat.isFile()) {
-            return {
-                collection: [ {
-                    artworkId: "",
-                    author: "",
-                    authorId: "system",
-                    identifier: query,
-                    title: path.basename(p),
-                    isStream: false,
-                    sourceName: this.sourceName,
-                    duration: stat.size / BYTES_PER_SECOND
-                } ],
-                limit: 1,
-                offset: 0,
-                type: "track",
-
-                title: "",
-                description: "",
-                author: "",
-                countResults: 1
-            }
+            return [
+                    {
+                        artworkId: "",
+                        author: { name: "", url: "" },
+                        identifier: query,
+                        title: path.basename(p),
+                        isLiveStream: false,
+                        sourceName: this.sourceName,
+                        duration: stat.size / BYTES_PER_SECOND
+                    }
+                ]
         }
 
         if (stat.isDirectory()) {
@@ -53,36 +44,31 @@ class Local extends AudioSource {
             const filter = (await fs.promises.readdir(p)).filter(x => knownFormats.includes(path.extname(x)))
             .slice(offset, limit === -1 ? undefined : limit);
 
-            const build = (stat: fs.Stats, identifier: string): AudioTrack => {
+            const build = (stat: fs.Stats, identifier: string): SoundTrack => {
                 return {
                     artworkId: "",
-                    author: "",
-                    authorId: "system",
+                    author: { name: "", url: "" },
                     identifier: path.join(query, identifier),
                     title: identifier,
-                    isStream: false,
+                    isLiveStream: false,
                     sourceName: this.sourceName,
                     duration: stat.size / BYTES_PER_SECOND
                 }
             }
 
-            return {
-                collection: await Promise.all(filter.map(async id => build(await fs.promises.stat(id), id))),
-                limit: limit,
-                offset: offset,
-                type: "playlist",
-                
-                title: path.basename(query),
-                description: "",
-                author: "system",
-                countResults: filter.length
-            }
+            return [<PlaylistInfo>({
+                name: path.basename(p),
+                author: { name: "", url: "" },
+                sourceName: this.sourceName,
+                url: p,
+                tracks: await Promise.all(filter.map(async id => build(await fs.promises.stat(id), id)))
+            })]
         }
 
         return null;
     }
     
-    public async createAudioStream(track: AudioTrack): Promise<{ demuxer?: opus.OggDemuxer | opus.WebmDemuxer | undefined; decoder: opus.Decoder | FFmpeg; stream: Readable; } | null> {
+    public async createAudioMetadata(track: SoundTrack): Promise<SoundMetadata | Error | null> {
         const { stream, type } = await demuxProbe(fs.createReadStream(path.join(this.#soundsFolder, track.identifier)));
 
         const demuxer = type === StreamType.OggOpus ? new prism.opus.OggDemuxer() :

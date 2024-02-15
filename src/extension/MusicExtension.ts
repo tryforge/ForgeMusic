@@ -1,6 +1,6 @@
 import { ForgeClient, ForgeExtension } from "forgescript";
 import path = require("node:path");
-import AudioNode = require("../structures/AudioNode");
+import AudioPlayerNode = require("../structures/AudioPlayerNode");
 
 const { version }: { version: string } = require(path.join(__dirname, "../..", "package.json"));
 
@@ -15,7 +15,7 @@ class MusicExtension extends ForgeExtension {
     public description = "A music extension for forgescript.";
     public version = version;
 
-    public readonly nodes = new Map<string, AudioNode>();
+    public readonly nodes = new Map<string, AudioPlayerNode>();
     public readonly config = new Map<string, string | number | boolean>();
     public init(client: ForgeClient) {
         client.music = this;

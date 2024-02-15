@@ -1,6 +1,6 @@
 import { getVoiceConnection } from "@discordjs/voice";
 import { ArgType, ErrorType, ForgeError, NativeFunction, Return, ReturnType } from "forgescript";
-import AudioNode = require("../../structures/AudioNode");
+import AudioPlayerNode = require("../../structures/AudioPlayerNode");
 
 export default new NativeFunction({
     name: "$connectAudio",
@@ -27,7 +27,7 @@ export default new NativeFunction({
         const conn = getVoiceConnection(guild.id);
         if (! conn) return new Return(ReturnType.Error, new ForgeError(null, ErrorType.Custom, `There's no voice connection made with guild`));
 
-        const player = AudioNode.Instances.get(id);
+        const player = AudioPlayerNode.Instances.get(id);
         if (! player) return new Return(ReturnType.Error, new ForgeError(null, ErrorType.Custom, `There's no audio player assigned with id of "${id}"`));
 
         player.listen(conn);
