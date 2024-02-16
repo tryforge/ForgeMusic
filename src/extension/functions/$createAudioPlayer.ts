@@ -16,10 +16,10 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [id]) {
-        if (! AudioPlayerNode.Instances.has(id)) {
-            AudioPlayerNode.Instances.set(id, new AudioPlayerNode(id));
-        }
+        if (ctx.client.music.nodes.has(id))
+            return new Return(ReturnType.Success, false);
+        ctx.client.music.nodes.set(id, new AudioPlayerNode(id));
 
-        return new Return(ReturnType.Success, "");
+        return new Return(ReturnType.Success, true);
     }
 })

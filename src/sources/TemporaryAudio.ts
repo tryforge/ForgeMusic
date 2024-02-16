@@ -34,7 +34,7 @@ class TemporaryAudio extends SourceExtension {
     /**
      * This only accepts encoded string files.
      * @param query 
-     * @param limit 
+\     * @param limit 
      * @param offset 
      */
     public async search(query: string, limit?: number | undefined, offset?: number | undefined): Promise<SearchResult | null> {
