@@ -1,5 +1,5 @@
 import { ArgType, NativeFunction, Return, ReturnType } from "forgescript";
-import AudioPlayerNode = require("../../structures/AudioPlayerNode");
+import HarmonyPlayer = require("../../structures/HarmonyPlayer");
 
 export default new NativeFunction({
     name: "$createAudioPlayer",
@@ -16,9 +16,11 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [id]) {
-        if (ctx.client.music.nodes.has(id))
+        const harmony = ctx.client.music.harmony;
+        if (harmony.harmonyNodes.has(id))
             return new Return(ReturnType.Success, false);
-        ctx.client.music.nodes.set(id, new AudioPlayerNode(id));
+        // ctx.client.music.harmony.harmonyNodes.set(id, new HarmonyPlayer(id));
+        harmony.createAudioPlayer(id);
 
         return new Return(ReturnType.Success, true);
     }

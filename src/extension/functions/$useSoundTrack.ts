@@ -1,5 +1,4 @@
 import { ArgType, NativeFunction, Return, ReturnType } from "forgescript";
-import AudioPlayerNode = require("../../structures/AudioPlayerNode");
 import { decode } from "../../utils/constants";
 
 export default new NativeFunction({

@@ -1,23 +1,17 @@
-import MusicExtension = require("../extension/MusicExtension");
-import SourceExtension = require("../structures/SourceExtension");
 import fs = require("node:fs");
-import { PlaylistInfo, SearchResult, SoundMetadata, SoundTrack } from "../utils";
 import path = require("node:path");
-import { opus, FFmpeg } from "prism-media";
-import { Readable } from "stream";
-import { StreamType, demuxProbe } from "@discordjs/voice";
+import voice = require("@discordjs/voice");
 import prism = require('prism-media');
+import Harmony = require("../structures/Harmony");
+import SourceExtension = require("../structures/SourceExtension");
 import { BYTES_PER_SECOND, FFMPEG_ARGUMENTS } from "../utils/constants";
+import { PlaylistInfo, SearchResult, SoundMetadata, SoundTrack } from "../utils"
 
 class Local extends SourceExtension {
     public readonly sourceName = "local";
-    #soundsFolder = path.join(process.cwd(), "sounds")
+    #soundsFolder = path.join(process.cwd(), ".harmony_cache")
 
-    public init(extension: MusicExtension) {
-        const p = extension.config.get("FolderSoundsPath");
-        if (! (typeof p === "string")) return;
-        this.#soundsFolder = p;
-    }
+    public init(harmony: Harmony) {}
 
     public async search(query: string, limit = -1, offset = 0): Promise<SearchResult | null> {
         const p = path.join(this.#soundsFolder, query);
@@ -69,10 +63,10 @@ class Local extends SourceExtension {
     }
     
     public async createAudioMetadata(track: SoundTrack): Promise<SoundMetadata | Error | null> {
-        const { stream, type } = await demuxProbe(fs.createReadStream(path.join(this.#soundsFolder, track.identifier)));
+        const { stream, type } = await voice.demuxProbe(fs.createReadStream(path.join(this.#soundsFolder, track.identifier)));
 
-        const demuxer = type === StreamType.OggOpus ? new prism.opus.OggDemuxer() :
-            type === StreamType.WebmOpus ? new prism.opus.WebmDemuxer : undefined;
+        const demuxer = type === voice.StreamType.OggOpus ? new prism.opus.OggDemuxer() :
+            type === voice.StreamType.WebmOpus ? new prism.opus.WebmDemuxer : undefined;
 
         const decoder = demuxer ? new prism.opus.Decoder({ frameSize: 960, channels: 2, rate: 48000 }) :
             new prism.FFmpeg({ args: FFMPEG_ARGUMENTS });

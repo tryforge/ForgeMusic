@@ -1,5 +1,5 @@
 import path = require("node:path");
-import AudioPlayerNode = require("./structures/AudioPlayerNode");
+import HarmonyPlayer = require("./structures/HarmonyPlayer");
 
 // Sources
 
@@ -23,5 +23,5 @@ process.env.sound_cache_dir = path.join(process.cwd(), '.cache');
 
 
 export {
-    AudioPlayerNode as AudioNode,
+    HarmonyPlayer as AudioNode,
 }

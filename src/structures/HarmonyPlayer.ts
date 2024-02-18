@@ -4,14 +4,15 @@ import constants = require("../utils/constants");
 import internal = require("node:stream");
 import prism = require("prism-media");
 import { SoundMetadata, SoundTrack } from "../utils";
+import Harmony = require("./Harmony");
 
 interface AudioPlayerNodeEvents {
-    "connectionAdded": [connection: voice.VoiceConnection, node: AudioPlayerNode];
+    "connectionAdded": [connection: voice.VoiceConnection, node: HarmonyPlayer];
     "trackStarting": [track: SoundTrack];
     "trackStopped": [track: SoundTrack];
 }
 
-declare interface AudioPlayerNode {
+declare interface HarmonyPlayer {
     on<Event extends keyof AudioPlayerNodeEvents>(event: Event, listener: (...args: AudioPlayerNodeEvents[Event]) => void): this;
     once<Event extends keyof AudioPlayerNodeEvents>(event: Event, listener: (...args: AudioPlayerNodeEvents[Event]) => void): this;
     removeListener<Event extends keyof AudioPlayerNodeEvents>(event: Event, listener: (...args: AudioPlayerNodeEvents[Event]) => void): this;
@@ -19,16 +20,18 @@ declare interface AudioPlayerNode {
     removeAllListeners<Event extends keyof AudioPlayerNodeEvents>(event: Event): this;
 }
 
-class AudioPlayerNode extends EventEmitter {
+class HarmonyPlayer extends EventEmitter {
     public readonly id: string;
     public readonly voiceAudioPlayer = new voice.AudioPlayer();
-    public readonly voiceAudioSources = [];
+    public readonly harmony: Harmony;
     #playingSound?: SoundMetadata;
     #audioResource?: voice.AudioResource<internal.PassThrough>;
 
-    public constructor(id: string) {
+    public constructor(id: string, harmony: Harmony) {
         super();
+        if (! (harmony instanceof Harmony)) throw new Error(`Provided parameters for harmony is not instance of Harmony!`);
         this.id = id;
+        this.harmony = harmony;
     }
 
     public get volume(): prism.VolumeTransformer | undefined {
@@ -84,4 +87,4 @@ class AudioPlayerNode extends EventEmitter {
     }
 }
 
-export = AudioPlayerNode;
+export = HarmonyPlayer;

@@ -1,7 +1,6 @@
-const lib = require("./lib");
-const sc = new lib.Soundcloud();
+function a() {
+    console.assert(1 == 2, 'no');
+    console.log('hi');
+}
 
-sc.getClientID().then(x => {
-    sc.search("The eminence in shadow", "playlists")
-    .then(console.log)
-})
+a()
