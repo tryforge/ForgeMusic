@@ -1,4 +1,4 @@
-import { ForgeClient, ForgeExtension } from "forgescript";
+import { ForgeClient, ForgeExtension, FunctionManager } from "forgescript";
 import path = require("node:path");
 import HarmonyPlayer = require("../structures/HarmonyPlayer");
 import Harmony = require("../structures/Harmony");
@@ -20,6 +20,7 @@ class MusicExtension extends ForgeExtension {
     public readonly config = new Map<string, string | number | boolean>();
     public init(client: ForgeClient) {
         client.music = this;
+        FunctionManager.load(path.join(__dirname, "functions"));
     }
 }
 

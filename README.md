@@ -1,2 +1,2 @@
 ### Forge.Music
-> Currently Playing soundtrack : [A Bowl of Delectable Food](https://www.youtube.com/watch?v=-JUIQNE-tRs "WE'RE DEALING 13.37 DAMAGE WITH THIS SONG")
+> Currently Playing soundtrack : [Item Asylum - Filibuster](https://www.youtube.com/watch?v=QJ2V6NxA1Ew "SOBA KICK")

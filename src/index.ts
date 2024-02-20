@@ -1,27 +1,15 @@
-import path = require("node:path");
+import Harmony = require("./structures/Harmony");
 import HarmonyPlayer = require("./structures/HarmonyPlayer");
+import SourceExtension = require("./structures/SourceExtension");
+import MusicExtension = require("./extension/MusicExtension");
 
 // Sources
-
-declare global {
-    namespace NodeJS {
-        interface ProcessEnv {
-            /**
-             * Downloads audio automatically on created class
-             */
-            sound_auto_prepare: boolean;
-            /**
-             * The path to cache downloaded audio
-             */
-            sound_cache_dir: string;
-        }
-    }
-}
-
-process.env.sound_auto_prepare = true;
-process.env.sound_cache_dir = path.join(process.cwd(), '.cache');
-
+import Youtube = require("./sources/Youtube");
 
 export {
-    HarmonyPlayer as AudioNode,
+    Harmony,
+    HarmonyPlayer,
+    MusicExtension,
+    SourceExtension,
+    Youtube
 }

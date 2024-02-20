@@ -48,7 +48,8 @@ export const regex = {
 
 export const encode = (track: SoundTrack) => {
     // Regex /([^:]+):([^_]+)_([^=]+)=(\d+)=([^\?]+)\?(Y|N){1}_/
-    return Buffer.from(`${track.sourceName}:${track.identifier}_${track.artworkId}=${track.duration}=${track.author.name}_${track.author.url}=${track.authorId}?${ track.isLiveStream ? "Y" : "N" }_${track.title}`);
+    return Buffer.from(`${track.sourceName}:${track.identifier}_${track.artworkId}=${track.duration}=${track.author.name}_${track.author.url}=${track.authorId}?${ track.isLiveStream ? "Y" : "N" }_${track.title}`)
+        .toString("base64url");
 }
 
 export const decode = (encoded: string): SoundTrack => {

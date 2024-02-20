@@ -22,30 +22,37 @@ declare interface HarmonyPlayer {
 
 class HarmonyPlayer extends EventEmitter {
     public readonly id: string;
-    public readonly voiceAudioPlayer = new voice.AudioPlayer();
+    public readonly voiceAudioPlayer = new voice.AudioPlayer({ debug: true });
     public readonly harmony: Harmony;
     #playingSound?: SoundMetadata;
     #audioResource?: voice.AudioResource<internal.PassThrough>;
 
     public constructor(id: string, harmony: Harmony) {
         super();
-        if (! (harmony instanceof Harmony)) throw new Error(`Provided parameters for harmony is not instance of Harmony!`);
+        
         this.id = id;
         this.harmony = harmony;
+        this.voiceAudioPlayer.on("debug", console.log);
     }
 
     public get volume(): prism.VolumeTransformer | undefined {
         return this.#audioResource?.volume;
     }
 
-    public async playSong(sound: SoundTrack) {
+    public async playSong(track: SoundTrack) {
         this.#detachAudio();
 
-        if (! sound) return;
-        // this.#playingSound = sound;
+        if (! track) return;
+        const sound = await this.harmony.createAudioMetadata(track);
+        if (! sound) throw new Error(`no sound.`);
+
+        this.#playingSound = sound;
         this.#audioResource = this.#createAudioResource();
 
-        this.#playingSound!.stream.pipe(this.#audioResource.metadata);
+        // if (sound.demuxer) internal.pipeline(sound.stream, sound.demuxer, sound.decoder, constants.noop);
+        // else internal.pipeline(sound.stream, sound.decoder, constants.noop);
+        
+        this.#playingSound.stream.pipe(this.#audioResource.metadata);
         this.voiceAudioPlayer.play(this.#audioResource);
     }
 

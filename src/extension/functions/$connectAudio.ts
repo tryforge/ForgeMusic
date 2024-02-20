@@ -24,9 +24,7 @@ export default new NativeFunction({
     ],
     execute(ctx, [guild, id]) {
         const connection = getVoiceConnection(guild.id);
-        // if (! connection) return new Return(ReturnType.Error, new ForgeError(null, ErrorType.Custom, `There's no voice connection made with guild`));
         const player = ctx.client.music.harmony.harmonyNodes.get(id);
-        // if (! player) return new Return(ReturnType.Error, new ForgeError(null, ErrorType.Custom, `There's no audio player assigned with id of "${id}"`));
 
         if (! (connection && player)) return new Return(ReturnType.Success, false);
         player.listen(connection);

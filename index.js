@@ -1,6 +1,13 @@
-function a() {
-    console.assert(1 == 2, 'no');
-    console.log('hi');
-}
+const lib = require("./lib");
+const fs = require("forgescript");
+const client = new fs.ForgeClient({
+    intents: ["GuildVoiceStates", "Guilds", "GuildMessages", "MessageContent"],
+    events: ["ready", "messageCreate"],
+    extensions: [new lib.MusicExtension()],
+    prefixes: ["!"]
+});
 
-a()
+client.music.harmony.registerSource(new lib.Youtube())
+
+client.commands.load("./commands")
+client.login(process.env.TOKEN)
