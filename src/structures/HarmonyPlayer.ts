@@ -49,10 +49,10 @@ class HarmonyPlayer extends EventEmitter {
         this.#playingSound = sound;
         this.#audioResource = this.#createAudioResource();
 
-        // if (sound.demuxer) internal.pipeline(sound.stream, sound.demuxer, sound.decoder, constants.noop);
-        // else internal.pipeline(sound.stream, sound.decoder, constants.noop);
+        if (sound.demuxer) internal.pipeline(sound.stream, sound.demuxer, sound.decoder, constants.noop);
+        else internal.pipeline(sound.stream, sound.decoder, constants.noop);
         
-        this.#playingSound.stream.pipe(this.#audioResource.metadata);
+        this.#playingSound.decoder.pipe(this.#audioResource.metadata);
         this.voiceAudioPlayer.play(this.#audioResource);
     }
 

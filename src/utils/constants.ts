@@ -11,7 +11,6 @@ export const FFMPEG_ARGUMENTS = [
     "48000",
     "-ac",
     "2",
-    "-vn"
 ]
 
 export const FFMPEG_FILTER_ARGUMENTS = [

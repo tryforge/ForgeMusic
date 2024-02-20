@@ -3,7 +3,7 @@ import ytdl = require("ytdl-core");
 import Harmony = require("../structures/Harmony");
 import SourceExtension = require("../structures/SourceExtension");
 import { FFmpeg } from "prism-media";
-import { FFMPEG_ARGUMENTS } from "../utils/constants";
+import { FFMPEG_ARGUMENTS, FFMPEG_FILTER_ARGUMENTS } from "../utils/constants";
 import { SearchResult, SoundMetadata, SoundTrack } from "../utils";
 
 class Youtube extends SourceExtension {
@@ -29,21 +29,23 @@ class Youtube extends SourceExtension {
         try {
             const [search, q1] = query.split(":");
 
-            if (! q1) {
-                const url = new URL(q1);
+            if (search !== "ytsearch") {
+                const url = new URL(query);
                 const videoId = url.searchParams.get("v");
                 const listId = url.searchParams.get("list");
+                console.log(videoId, listId);
 
                 // if (listId) return 
                 if (videoId) {
                     const res = await yts.search({ videoId });
+                    console.log(res)
                     return [this.buildTrack(res)];
                 }
                 return null;
             }
 
             if (search !== "ytsearch") return null;
-            const results = await yts.search({ query });
+            const results = await yts.search({ query: q1 });
             return results.videos.map(x => this.buildTrack(x))
         } catch (err) {
             throw err;
@@ -53,8 +55,8 @@ class Youtube extends SourceExtension {
     public async createAudioMetadata(track: SoundTrack): Promise<SoundMetadata | null> {
         console.log(track.identifier)
         return {
-            stream: ytdl(`https://www.youtube.com/watch?v=${track.identifier}`),
-            decoder: new FFmpeg({ args: FFMPEG_ARGUMENTS }),
+            stream: ytdl(`https://www.youtube.com/watch?v=${track.identifier}`, { filter: "audioonly" }),
+            decoder: new FFmpeg({ args: FFMPEG_FILTER_ARGUMENTS }),
             demuxer: undefined
         }
     }
