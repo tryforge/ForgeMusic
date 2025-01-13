@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "declaration": true,
+        "declarationDir": "./types",
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "incremental": true,
+        "module": "CommonJS",
+        "target": "ES2022",
+        "paths": {
+            "@utils/*": ["./src/utils/*"],
+            "@handlers/*": ["./src/classes/handlers/*"],
+            "@managers/*": ["./src/classes/managers/*"],
+            "@structures/*": ["./src/classes/structures/*"]
+        },
+        "tsBuildInfoFile": "./__dump__/.tsbuildinfo",
+        "skipLibCheck": true
+    },
+    "include": [
+        "./src/**/*.ts"
+    ],
+    "exclude": [
+        "./__dump__",
+        "./__test__",
+        "./node_modules",
+    ]
+}

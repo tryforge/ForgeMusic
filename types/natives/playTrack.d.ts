@@ -1,0 +1,42 @@
+import { ArgType, NativeFunction } from "@tryforge/forgescript";
+import { BaseChannel, VoiceBasedChannel } from "discord.js";
+declare const _default: NativeFunction<[{
+    name: string;
+    description: string;
+    type: ArgType.Channel;
+    required: true;
+    rest: false;
+    check: (c: BaseChannel) => c is VoiceBasedChannel;
+}, import("@tryforge/forgescript").IArg<ArgType.String, true, false, import("@tryforge/forgescript").EnumLike>, import("@tryforge/forgescript").IArg<ArgType.String, boolean, false, import("@tryforge/forgescript").EnumLike>, import("@tryforge/forgescript").IArg<ArgType.Enum, boolean, false, {
+    readonly AUTO: "auto";
+    readonly YOUTUBE: "youtube";
+    readonly YOUTUBE_PLAYLIST: "youtubePlaylist";
+    readonly SOUNDCLOUD_TRACK: "soundcloudTrack";
+    readonly SOUNDCLOUD_PLAYLIST: "soundcloudPlaylist";
+    readonly SOUNDCLOUD: "soundcloud";
+    readonly SPOTIFY_SONG: "spotifySong";
+    readonly SPOTIFY_ALBUM: "spotifyAlbum";
+    readonly SPOTIFY_PLAYLIST: "spotifyPlaylist";
+    readonly SPOTIFY_SEARCH: "spotifySearch";
+    readonly FACEBOOK: "facebook";
+    readonly VIMEO: "vimeo";
+    readonly ARBITRARY: "arbitrary";
+    readonly REVERBNATION: "reverbnation";
+    readonly YOUTUBE_SEARCH: "youtubeSearch";
+    readonly YOUTUBE_VIDEO: "youtubeVideo";
+    readonly SOUNDCLOUD_SEARCH: "soundcloudSearch";
+    readonly APPLE_MUSIC_SONG: "appleMusicSong";
+    readonly APPLE_MUSIC_ALBUM: "appleMusicAlbum";
+    readonly APPLE_MUSIC_PLAYLIST: "appleMusicPlaylist";
+    readonly APPLE_MUSIC_SEARCH: "appleMusicSearch";
+    readonly FILE: "file";
+    readonly AUTO_SEARCH: "autoSearch";
+    readonly DISCORD_PLAYER_BLOB: "discordPlayerBlob";
+}>, {
+    name: string;
+    description: string;
+    type: ArgType.String;
+    required: false;
+    rest: true;
+}], true>;
+export default _default;

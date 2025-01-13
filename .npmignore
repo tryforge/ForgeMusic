@@ -1,0 +1,12 @@
+# Folders
+__dump__/
+__test__/
+node_modules/
+src/
+
+# Files
+.gitignore
+tsconfig.json
+pnpm-lock.yaml
+package-lock.json
+dist/docgen.js
