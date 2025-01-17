@@ -13,7 +13,7 @@
   "readme": "README.md",
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "dependencies": {
     "@discordjs/voice": "^0.16.0",
     "discord.js": "^14.13.0",
