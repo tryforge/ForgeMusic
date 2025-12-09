@@ -9,6 +9,10 @@ exports.default = new forgescript_1.NativeFunction({
     unwrap: false,
     output: forgescript_1.ArgType.Boolean,
     execute(ctx) {
-        return this.success((0, discord_player_1.useQueue)(ctx.guild).enableShuffle(true));
+        const queue = (0, discord_player_1.useQueue)(ctx.guild);
+        if (!queue) {
+            return this.customError("No queue found.");
+        }
+        return this.success(queue.enableShuffle(true));
     }
 });

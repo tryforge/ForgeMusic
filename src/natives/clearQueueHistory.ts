@@ -7,7 +7,13 @@ export default new NativeFunction({
     description: "Clear the queue history.",
     unwrap: false,
     execute(ctx) {
-        useQueue(ctx.guild).history.clear()
+        const queue = useQueue(ctx.guild)
+        if (!queue) {
+            return this.customError("No queue found.")
+        }
+
+        queue.history.clear()
+        
         return this.success()
     }
 })

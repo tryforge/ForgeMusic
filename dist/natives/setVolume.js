@@ -13,7 +13,7 @@ exports.default = new forgescript_1.NativeFunction({
     unwrap: true,
     args: [forgescript_1.Arg.requiredNumber("Amount", "The volume amount to be applied.")],
     execute(ctx, [amount]) {
-        (0, getNode_1.default)(ctx).setVolume(amount);
+        (0, getNode_1.default)(ctx)?.setVolume(amount);
         return this.success();
     }
 });

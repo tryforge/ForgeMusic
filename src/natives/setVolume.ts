@@ -9,7 +9,7 @@ export default new NativeFunction({
     unwrap: true,
     args: [Arg.requiredNumber("Amount", "The volume amount to be applied.")],
     execute(ctx, [amount]) {
-        getNode(ctx).setVolume(amount)
+        getNode(ctx)?.setVolume(amount)
 
         return this.success()
     }

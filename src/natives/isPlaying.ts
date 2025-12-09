@@ -9,6 +9,6 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     execute(ctx) {
         const player = useMainPlayer()
-        return this.success(player.queues.get(ctx.guild).isPlaying())
+        return this.success(player.queues.get(ctx.guild)?.isPlaying())
     }
 })

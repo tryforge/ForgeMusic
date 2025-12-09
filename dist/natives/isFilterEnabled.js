@@ -13,6 +13,9 @@ exports.default = new forgescript_1.NativeFunction({
     output: forgescript_1.ArgType.Boolean,
     async execute(ctx, [filter]) {
         const queue = (0, discord_player_1.useQueue)(ctx.guild);
+        if (!queue) {
+            return this.customError("No queue found.");
+        }
         const allFilters = queue.filters.ffmpeg.getFiltersEnabled().concat(queue.filters.ffmpeg.getFiltersDisabled());
         const foundFilter = allFilters.find((fil) => fil.toLowerCase() === filter.toLowerCase());
         return this.success(queue.filters.ffmpeg.isEnabled(foundFilter));

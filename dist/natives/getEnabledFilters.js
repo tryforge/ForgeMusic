@@ -10,6 +10,9 @@ exports.default = new forgescript_1.NativeFunction({
     output: forgescript_1.ArgType.String,
     execute(ctx) {
         const queue = (0, discord_player_1.useQueue)(ctx.guild);
+        if (!queue) {
+            return this.customError("No queue found.");
+        }
         return this.success(queue.filters.ffmpeg.getFiltersEnabled().join(","));
     }
 });

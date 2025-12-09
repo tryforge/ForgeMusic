@@ -8,6 +8,6 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Number,
     execute(ctx) {
-        return this.success(getNode(ctx).getTimestamp().progress * 1000)
+        return this.success(getNode(ctx)?.getTimestamp().progress * 1000)
     }
 })

@@ -9,7 +9,7 @@ exports.default = new forgescript_1.NativeFunction({
     unwrap: false,
     output: forgescript_1.ArgType.Unknown,
     async execute(ctx) {
-        await (0, discord_player_1.useQueue)(ctx.guild).history.next();
+        await (0, discord_player_1.useQueue)(ctx.guild)?.history.next();
         return this.success();
     }
 });

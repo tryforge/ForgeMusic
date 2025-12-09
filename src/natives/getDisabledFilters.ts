@@ -9,6 +9,10 @@ export default new NativeFunction({
     output: ArgType.String,
     execute(ctx) {
         const queue = useQueue(ctx.guild)
+        if (!queue) {
+            return this.customError("No queue found.")
+        }
+        
         return this.success(queue.filters.ffmpeg.getFiltersDisabled().join(","))
     }
 })

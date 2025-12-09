@@ -12,8 +12,11 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     async execute(ctx, [filter]) {
         const queue = useQueue(ctx.guild)
-        const allFilters = queue.filters.ffmpeg.getFiltersEnabled().concat(queue.filters.ffmpeg.getFiltersDisabled())
+        if (!queue) {
+            return this.customError("No queue found.")
+        }
 
+        const allFilters = queue.filters.ffmpeg.getFiltersEnabled().concat(queue.filters.ffmpeg.getFiltersDisabled())
         const foundFilter = allFilters.find((fil) => fil.toLowerCase() === filter.toLowerCase())
 
         return this.success(queue.filters.ffmpeg.isEnabled(foundFilter))

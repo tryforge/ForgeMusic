@@ -11,6 +11,10 @@ export default new NativeFunction({
     args: [Arg.restEnum(FFMPEGFilters, "Filters", "Filter names to be toggled.")],
     async execute(ctx, [filters]) {
         const queue = useQueue(ctx.guild)
+        if (!queue) {
+            return this.customError("No queue found.")
+        }
+        
         const allFilters = queue.filters.ffmpeg.getFiltersEnabled().concat(queue.filters.ffmpeg.getFiltersDisabled())
 
         for (const filter of filters) {

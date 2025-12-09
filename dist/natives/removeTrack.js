@@ -14,6 +14,6 @@ exports.default = new forgescript_1.NativeFunction({
     args: [forgescript_1.Arg.requiredNumber("Position", "The track position to be removed.")],
     output: forgescript_1.ArgType.Boolean,
     execute(ctx, [position]) {
-        return this.success(!!(0, getNode_1.default)(ctx).remove(position));
+        return this.success(!!(0, getNode_1.default)(ctx)?.remove(position));
     }
 });

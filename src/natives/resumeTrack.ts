@@ -8,6 +8,6 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Boolean,
     execute(ctx) {
-        return this.success(getNode(ctx).resume())
+        return this.success(getNode(ctx)?.resume())
     }
 })

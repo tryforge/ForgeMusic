@@ -8,7 +8,7 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Unknown,
     async execute(ctx) {
-        await useQueue(ctx.guild).history.next();
+        await useQueue(ctx.guild)?.history.next();
         return this.success()
     }
 })

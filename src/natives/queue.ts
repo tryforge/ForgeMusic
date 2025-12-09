@@ -19,6 +19,10 @@ export default new NativeFunction({
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
         const queue = useQueue(ctx.guild)
+        if (!queue) {
+            return this.customError("No queue found.")
+        }
+        
         const tracks = queue.tracks.data
 
         text ||= "{position} {track.title} | <@{track.requestedBy.username}>"

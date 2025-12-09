@@ -10,6 +10,6 @@ exports.default = new forgescript_1.NativeFunction({
     output: forgescript_1.ArgType.Boolean,
     execute(ctx) {
         const player = (0, discord_player_1.useMainPlayer)();
-        return this.success(player.queues.get(ctx.guild).isPlaying());
+        return this.success(player.queues.get(ctx.guild)?.isPlaying());
     }
 });

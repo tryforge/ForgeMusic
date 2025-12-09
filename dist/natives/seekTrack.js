@@ -14,6 +14,6 @@ exports.default = new forgescript_1.NativeFunction({
     args: [forgescript_1.Arg.requiredTime("Duration", "Seek duration to be applied.")],
     output: forgescript_1.ArgType.Boolean,
     async execute(ctx, [duration]) {
-        return this.success(await (0, getNode_1.default)(ctx).seek(duration));
+        return this.success(await (0, getNode_1.default)(ctx)?.seek(duration));
     }
 });

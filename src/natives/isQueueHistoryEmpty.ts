@@ -8,6 +8,11 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Boolean,
     execute(ctx) {
-        return this.success(useQueue(ctx.guild).history.isEmpty())
+        const queue = useQueue(ctx.guild)
+        if (!queue) {
+            return this.customError("No queue found.")
+        }
+
+        return this.success(queue.history.isEmpty())
     }
 })

@@ -8,7 +8,11 @@ exports.default = new forgescript_1.NativeFunction({
     description: "Clear the queue history.",
     unwrap: false,
     execute(ctx) {
-        (0, discord_player_1.useQueue)(ctx.guild).history.clear();
+        const queue = (0, discord_player_1.useQueue)(ctx.guild);
+        if (!queue) {
+            return this.customError("No queue found.");
+        }
+        queue.history.clear();
         return this.success();
     }
 });

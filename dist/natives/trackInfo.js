@@ -14,6 +14,9 @@ exports.default = new forgescript_1.NativeFunction({
     output: forgescript_1.ArgType.String,
     execute(ctx, [properties]) {
         const queue = (0, discord_player_1.useQueue)(ctx.guild);
+        if (!queue) {
+            return this.customError("No queue found.");
+        }
         const track = queue.currentTrack;
         ctx.setEnvironmentKey("myTrack", track);
         const got = ctx.getEnvironmentKey(...["myTrack", ...properties]);

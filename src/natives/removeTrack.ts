@@ -10,6 +10,6 @@ export default new NativeFunction({
     args: [Arg.requiredNumber("Position", "The track position to be removed.")],
     output: ArgType.Boolean,
     execute(ctx, [position]) {
-        return this.success(!!getNode(ctx).remove(position))
+        return this.success(!!getNode(ctx)?.remove(position))
     }
 })

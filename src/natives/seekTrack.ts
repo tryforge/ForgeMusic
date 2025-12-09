@@ -10,6 +10,6 @@ export default new NativeFunction({
     args: [Arg.requiredTime("Duration", "Seek duration to be applied.")],
     output: ArgType.Boolean,
     async execute(ctx, [duration]) {
-        return this.success(await getNode(ctx).seek(duration))
+        return this.success(await getNode(ctx)?.seek(duration))
     }
 })
