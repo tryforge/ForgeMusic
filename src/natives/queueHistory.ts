@@ -22,6 +22,8 @@ export default new NativeFunction({
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         let tracks = queue.history.tracks.data
         if (index) tracks = tracks.slice(index, limit ?? undefined)
 

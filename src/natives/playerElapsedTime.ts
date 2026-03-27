@@ -10,6 +10,8 @@ export default new NativeFunction({
     output: ArgType.Number,
     execute(ctx) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         return this.success(queue.node.getTimestamp().progress * 1000)
     },
 })

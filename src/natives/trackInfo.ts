@@ -11,6 +11,8 @@ export default new NativeFunction({
     output: ArgType.String,
     execute(ctx, [properties]) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         const track = queue.currentTrack
 
         ctx.setEnvironmentKey('myTrack', track)

@@ -9,6 +9,8 @@ exports.default = new forgescript_1.NativeFunction({
     unwrap: false,
     execute(ctx) {
         const queue = (0, discord_player_1.useQueue)(ctx.guild.id);
+        if (!queue)
+            return this.customError('No queue found.');
         queue.clear();
         return this.success();
     },

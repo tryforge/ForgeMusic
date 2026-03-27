@@ -13,6 +13,8 @@ export default new NativeFunction({
     ],
     async execute(ctx, [filters]) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         const allFilters = queue.filters.ffmpeg.getFiltersEnabled()
 
         for (const filter of filters) {

@@ -15,6 +15,8 @@ exports.default = new forgescript_1.NativeFunction({
     execute(ctx, [position, newPosition]) {
         const player = (0, discord_player_1.useMainPlayer)();
         const queue = player.queues.get(ctx.guild.id);
+        if (!queue)
+            return this.customError('No queue found.');
         const track = queue.node.remove(position);
         queue.node.insert(track, newPosition);
         return this.success();

@@ -11,6 +11,8 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     execute(ctx, [position]) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         return this.success(!!queue.node.remove(position))
     },
 })

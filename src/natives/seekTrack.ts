@@ -11,6 +11,8 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     async execute(ctx, [duration]) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         return this.success(await queue.node.seek(duration))
     },
 })

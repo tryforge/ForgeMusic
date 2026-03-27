@@ -8,14 +8,15 @@ exports.default = new forgescript_1.NativeFunction({
     description: 'Find an extractor by name.',
     brackets: true,
     unwrap: true,
-    args: [
-        forgescript_1.Arg.requiredString('Name', 'The name of the extractor to find.'),
-    ],
+    args: [forgescript_1.Arg.requiredString('Name', 'The name of the extractor to find.')],
     async execute(ctx, [query]) {
         const queue = (0, discord_player_1.useQueue)(ctx.guild.id);
+        if (!queue)
+            return this.customError('No queue found.');
         const extractors = Array.from(queue.player.extractors.store.values());
         let result;
-        result = extractors.find((ex) => ex.identifier.toLowerCase() === query.toLowerCase() || ex.constructor.name.toLowerCase() === query.toLowerCase())?.identifier;
+        result = extractors.find((ex) => ex.identifier.toLowerCase().includes(query.toLowerCase()) ||
+            ex.constructor.name.toLowerCase().includes(query.toLowerCase()))?.identifier;
         return this.success(result);
     },
 });

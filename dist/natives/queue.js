@@ -19,6 +19,8 @@ exports.default = new forgescript_1.NativeFunction({
     output: forgescript_1.ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
         const queue = (0, discord_player_1.useQueue)(ctx.guild.id);
+        if (!queue)
+            return this.customError('No queue found.');
         const tracks = queue.tracks.data;
         text ||= '{position} {track.title} | <@{track.requestedBy.username}>';
         const results = tracks

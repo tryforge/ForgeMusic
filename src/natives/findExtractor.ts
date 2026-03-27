@@ -10,13 +10,15 @@ export default new NativeFunction({
     args: [Arg.requiredString('Name', 'The name of the extractor to find.')],
     async execute(ctx, [query]) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         const extractors = Array.from(queue.player.extractors.store.values())
         let result: string
 
         result = extractors.find(
             (ex) =>
-                ex.identifier.toLowerCase() === query.toLowerCase() ||
-                ex.constructor.name.toLowerCase() === query.toLowerCase()
+                ex.identifier.toLowerCase().includes(query.toLowerCase()) ||
+                ex.constructor.name.toLowerCase().includes(query.toLowerCase())
         )?.identifier
 
         return this.success(result)

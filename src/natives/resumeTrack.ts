@@ -9,6 +9,8 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     execute(ctx) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         return this.success(queue.node.resume())
     },
 })

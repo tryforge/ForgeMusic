@@ -22,7 +22,7 @@
   "devDependencies": {
     "@tryforge/forgescript": "^2.6.0",
     "ascii-table3": "^0.9.0",
-    "discord-player-youtubei": "^1.5.0",
+    "discord-player-youtubei": "^2.0.0-dev.2",
     "discord.js": "^14.25.1",
     "dotenv": "^16.6.1",
     "googlevideo": "^4.0.4",
@@ -49,5 +49,8 @@
   },
   "bugs": {
     "url": "https://github.com/tryforge/ForgeMusic/issues"
-  }
+  },
+  "trustedDependencies": [
+    "youtube-dl-exec"
+  ]
 }

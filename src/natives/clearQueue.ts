@@ -8,6 +8,7 @@ export default new NativeFunction({
     unwrap: false,
     execute(ctx) {
         const queue = useQueue(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
 
         queue.clear()
 

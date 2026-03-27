@@ -14,6 +14,8 @@ export default new NativeFunction({
     execute(ctx, [position, newPosition]) {
         const player = useMainPlayer()
         const queue = player.queues.get(ctx.guild.id)
+        if (!queue) return this.customError('No queue found.')
+
         const track = queue.node.remove(position)
 
         queue.node.insert(track, newPosition)
