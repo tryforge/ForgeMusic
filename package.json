@@ -22,6 +22,9 @@
   "devDependencies": {
     "@tryforge/forgescript": "^2.6.0",
     "ascii-table3": "^0.9.0",
+    "discord-player-deezer": "^2.6.0",
+    "discord-player-soundcloud": "^1.0.7",
+    "discord-player-spotify": "^1.1.9",
     "discord-player-youtubei": "^2.0.0-dev.2",
     "discord.js": "^14.25.1",
     "dotenv": "^16.6.1",

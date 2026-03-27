@@ -12,6 +12,7 @@ const blacklistedEvents = [
     'willAutoPlay',
     'voiceStateUpdate',
 ]
+
 /**
  * The list of all events.
  */
@@ -19,11 +20,34 @@ const AllEvents = Object.keys(GuildQueueEvent).filter(
     (event) => !blacklistedEvents.includes(event)
 )
 
+/**
+ * Returns an array including the given events and the error events.
+ * @param events The events to be included.
+ * @returns An array including the given events and the error events.
+ * @example
+ * ```typescript
+ * // This:
+ * events: [GuildQueueEvent.AudioTracksAdd, GuildQueueEvent.PlayerStart, GuildQueueEvent.Error, GuildQueueEvent.PlayerError]
+ * 
+ * // is the same as:
+ * events: withErrorEvents(GuildQueueEvent.AudioTracksAdd, GuildQueueEvent.PlayerStart)
+ * ```
+ */
+const withErrorEvents = (...events: GuildQueueEvent[]) => {
+    return Array.from(
+        new Set([GuildQueueEvent.Error, GuildQueueEvent.PlayerError, ...events])
+    )
+}
+
 export {
     AllEvents,
+    /**
+     * Not stable.
+     */
     DefaultExtractors,
     ForgeMusic,
     GuildQueueEvent,
     QueueRepeatMode,
     QueryType,
+    withErrorEvents,
 }
