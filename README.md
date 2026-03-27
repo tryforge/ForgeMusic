@@ -29,9 +29,7 @@ A standard music library tailored for [ForgeScript](https://npmjs.com/package/@t
         1. [Event Data: Types and Interfaces](#event-data-types-and-interfaces)
             1. [Example](#example)
 3. [Advices](#advices)
-4. [Tips](#tips)
-    1. [Adding support for YouTube](#adding-support-for-youtube)
-5. [Contributors](#contributors)
+4. [Contributors](#contributors)
 
 ---
 
@@ -229,70 +227,10 @@ The following, is a list of event with its accessible properties.
 ```
 
 ## Advices
-
 - You must add the following events to the extension in order to work properly.
     - GuildQueueEvent.Error
     - GuildQueueEvent.PlayerError
 
-## Tips
-
-### Default Extractors
-
-The base framework provides some base music sources you can use. You must load them like follows.
-
-```js
-const { DefaultExtractors } = require('@tryforge/forge.music')
-const music = new ForgeMusic({
-    // ...
-    includeExtractors: DefaultExtractors,
-})
-```
-
-### Attach All Events
-
-If you want to attach all events, there is no need of writing each one manually, instead, you
-can import the constant `AllEvents` and put it into `events` property.
-
-```js
-const { AllEvents } = require('@tryforge/forge.music')
-const music = new ForgeMusic({
-    events: AllEvents,
-    // ...
-})
-```
-
-### Adding Support for YouTube
-
-ForgeMusic by default does not provide support for streaming from YouTube.
-You must install `discord-player-youtubei` and then require `YoutubeiExtractor` from it.
-
-```bash
-npm install discord-player-youtubei
-```
-
-then, do the following step.
-
-```js
-const {
-    DefaultExtractors,
-    ForgeMusic,
-    GuildQueueEvent,
-} = require('@tryforge/forge.music')
-const { YoutubeiExtractor } = require('discord-player-youtubei')
-const music = new ForgeMusic({
-    events: [
-        GuildQueueEvent.AudioTrackAdd,
-        GuildQueueEvent.Connection,
-        GuildQueueEvent.PlayerError,
-        GuildQueueEvent.Error,
-    ],
-    includeExtractors: [...DefaultExtractors, YoutubeiExtractor],
-})
-```
-
-And now, you're ready to use YouTube provider as smooth as possible.
-
 ## Contributors
-
 Many thanks for the contributors for making this extension the best choice out there.
 [![tryforge/ForgeMusic](https://contrib.rocks/image?repo=tryforge/ForgeMusic)](https://github.com/tryforge/ForgeMusic)
