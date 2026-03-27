@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./types/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node ./dist/docgen.js && pnpm prettier",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node ./dist/docgen.js && bun run prettier",
     "test": "node ./__test__",
     "prettier": "prettier ./src/ --write"
   },
@@ -25,12 +25,14 @@
     "discord-player-youtubei": "^1.5.0",
     "discord.js": "^14.25.1",
     "dotenv": "^16.6.1",
+    "googlevideo": "^4.0.4",
     "prettier": "3.5.1",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@discord-player/extractor": "^7.2.0",
+    "@snazzah/davey": "^0.1.10",
     "discord-player": "^7.2.0"
   },
   "pnpm": {

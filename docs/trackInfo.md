@@ -2,12 +2,12 @@
 Returns information of the current track.
 ## Usage
 ```
-$trackInfo[...properties]
+$trackInfo[...properties?]
 ```
 ## Fields
 |    Name    |             Description             |  Type  | Required | Rest |
 |------------|-------------------------------------|--------|----------|------|
-| Properties | The track properties to be accesed. | String | Yes      | Yes  |
+| Properties | The track properties to be accesed. | String | No       | Yes  |
 
 ## Output
 > String

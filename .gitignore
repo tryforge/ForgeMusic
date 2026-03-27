@@ -131,6 +131,7 @@ out
 
 # Custom
 .replit
+index.js
 replit.nix
 __dump__
 __test__

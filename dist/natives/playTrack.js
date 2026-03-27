@@ -50,7 +50,6 @@ exports.default = new forgescript_1.NativeFunction({
             executed = false;
             return e;
         });
-        console.log(['PLAY_TRACK_RESULTS', result]);
         return executed ? this.success() : this.error(result);
     },
 });
