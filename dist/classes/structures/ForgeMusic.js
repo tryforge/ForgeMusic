@@ -54,7 +54,6 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
             }
             i++;
         }
-        console.log(extractorOptions);
         this.player.extractors.loadMulti(extractors, extractorOptions);
     }
     /**
