@@ -1,5 +1,8 @@
+import {
+    AttachmentExtractor,
+    DefaultExtractors,
+} from '@discord-player/extractor'
 import { GuildQueueEvent, QueueRepeatMode, QueryType } from 'discord-player'
-import { DefaultExtractors } from '@discord-player/extractor'
 import { ForgeMusic } from '@structures/ForgeMusic'
 
 /**
@@ -28,7 +31,7 @@ const AllEvents = Object.keys(GuildQueueEvent).filter(
  * ```typescript
  * // This:
  * events: [GuildQueueEvent.AudioTracksAdd, GuildQueueEvent.PlayerStart, GuildQueueEvent.Error, GuildQueueEvent.PlayerError]
- * 
+ *
  * // is the same as:
  * events: withErrorEvents(GuildQueueEvent.AudioTracksAdd, GuildQueueEvent.PlayerStart)
  * ```
@@ -41,8 +44,9 @@ const withErrorEvents = (...events: GuildQueueEvent[]) => {
 
 export {
     AllEvents,
+    AttachmentExtractor,
     /**
-     * Not stable.
+     * Not fully stable.
      */
     DefaultExtractors,
     ForgeMusic,

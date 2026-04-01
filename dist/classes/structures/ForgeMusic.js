@@ -39,6 +39,25 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
         }
     }
     /**
+     * Add multiple extractors into the player.
+     * @param engines - Extractor engines to add.
+     */
+    addEngines(engines) {
+        const extractors = engines.map((engine) => engine[0]);
+        const extractorOptions = {};
+        let i = 0;
+        for (const engine of engines) {
+            const id = engine[0].identifier;
+            const options = engine[1];
+            if (options) {
+                extractorOptions[id] = options;
+            }
+            i++;
+        }
+        console.log(extractorOptions);
+        this.player.extractors.loadMulti(extractors, extractorOptions);
+    }
+    /**
      * Starts the music extension.
      * @param client - The discord client instance.
      * @returns {void}

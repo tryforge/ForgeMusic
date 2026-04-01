@@ -33,6 +33,11 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
     includeExtractors?: (typeof BaseExtractor)[]
 }
 
+type TupleEngineOption<O extends object, T extends typeof BaseExtractor<O>> = [
+    T,
+    ConstructorParameters<T>['1'],
+]
+
 /**
  * The entrypoint of the forge music system.
  */
@@ -67,6 +72,31 @@ export class ForgeMusic extends ForgeExtension {
             )
             process.exit()
         }
+    }
+
+    /**
+     * Add multiple extractors into the player.
+     * @param engines - Extractor engines to add.
+     */
+    public addEngines<O extends object, T extends typeof BaseExtractor<O>>(
+        engines: TupleEngineOption<O, T>[]
+    ) {
+        const extractors = engines.map((engine) => engine[0])
+        const extractorOptions: Record<string, O> = {}
+
+        let i = 0
+        for (const engine of engines) {
+            const id = engine[0].identifier
+            const options = engine[1]
+
+            if (options) {
+                extractorOptions[id] = options
+            }
+
+            i++
+        }
+
+        this.player.extractors.loadMulti(extractors, extractorOptions)
     }
 
     /**

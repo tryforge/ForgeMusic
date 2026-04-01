@@ -18,6 +18,10 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
      */
     includeExtractors?: (typeof BaseExtractor)[];
 }
+type TupleEngineOption<O extends object, T extends typeof BaseExtractor<O>> = [
+    T,
+    ConstructorParameters<T>['1']
+];
 /**
  * The entrypoint of the forge music system.
  */
@@ -45,6 +49,11 @@ export declare class ForgeMusic extends ForgeExtension {
      * @returns {ForgeMusic}
      */
     constructor(options?: ForgeMusicInitOptions);
+    /**
+     * Add multiple extractors into the player.
+     * @param engines - Extractor engines to add.
+     */
+    addEngines<O extends object, T extends typeof BaseExtractor<O>>(engines: TupleEngineOption<O, T>[]): void;
     /**
      * Starts the music extension.
      * @param client - The discord client instance.
